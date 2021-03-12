@@ -1,0 +1,53 @@
+{
+  "id": "se.k4mrat.VaEx",
+  "sdk": 2,
+  "brandColor": "#b9a9a2",
+  "name": {
+    "en": "Variable Extractor"
+  },
+  "description": {
+    "en": "Extract a variable and make it accessible with GET"
+  },
+  "category": "tools",
+  "images": {
+    "large": "assets/images/large.png",
+    "small": "assets/images/small.png"
+  },
+  "version": "0.0.1",
+  "compatibility": ">=2.0.0",
+  "author": {
+    "name": "Björn Kallin",
+    "email": "b.kallin@gmail.com"
+  },
+  "tags": {
+    "en": [
+      "Tools",
+      "Internet"
+    ]
+  },
+  "flow": {
+    "actions": [
+      {
+        "id": "addVariable",
+        "title": {
+          "en": "Choose a variable to extract"
+        },
+        "args": [
+          {
+            "name": "log",
+            "type": "text",
+            "placeholder": {
+              "en": "Variable to extract"
+            }
+          }
+        ]
+      },
+      {
+        "id": "deleteVariable",
+        "title": {
+          "en": "Delete Variables"
+        }
+      }
+    ]
+  }
+}
