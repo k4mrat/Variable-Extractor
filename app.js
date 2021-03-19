@@ -1,40 +1,62 @@
 "use strict";
 const Homey = require("homey");
-let extractVariable = [];
+let extractedVariables = {};
+let emptyObject = null;
 
-//is array?
-function isArray(a) {
-  return !!a && a.constructor === Array;
+//is this an Object?
+function isObject(a) {
+  return !!a && a.constructor === Object;
 }
 
+// add Variable to be extracted
+function addVariable(variable) {
+  let newVariable = {};
+  let oldVariable = Homey.ManagerSettings.get("extractedVariables");
 
+  newVariable = oldVariable + variable;
+
+  Homey.ManagerSettings.set("extractedVariables", newVariable);
+};
+
+// delete all variables
+function deleteVariable() {
+ // let deleteVariable = null
+  //deleteVariable = oldVariable + variable;
+
+  Homey.ManagerSettings.set("extractedVariables", emptyObject);
+};
+
+/*
 function addVariable(data) {
-  extractVariable.push(data);
+  let extractVariable = Object.assign = ("extractVariable", data);
   Homey.ManagerSettings.set("extractVariable", extractVariable);
   //Homey.ManagerNotifications.registerNotification("New variable extracted"); // todo: get timeline "variable added" notice to work
 }
-
+*/
 class variableExtractor extends Homey.App {
   onInit() {
-    extractVariable = Homey.ManagerSettings.get("extractVariable");
-    if (!isArray(extractVariable)) {
-      extractVariable = [];
+    extractedVariables = Homey.ManagerSettings.get("extractedVariables");
+  // if (!isObject(extractedVariable)) {
+     // extractedVariables = {};
       console.log("VaEx app init")
-    }
+      console.log(extractedVariables)
+    //}
     addVariable();
   }
   
-  getLog() {
-    return extractVariable;
+  getExtractedVariables() {
+    return extractedVariables;
   }
 
 }
+
+
 module.exports = variableExtractor;
 
 // add variable flow
 let actionAddVariable = new Homey.FlowCardAction("addVariable");
 actionAddVariable.register().registerRunListener((args, state) => {
-  addVariable(args.log);
+  addVariable(emptyObject + args.log);
   console.log("Variable " + args.log + " added");
   return true;
 });
@@ -42,8 +64,9 @@ actionAddVariable.register().registerRunListener((args, state) => {
 // delete flow
 let actiondeleteVariable = new Homey.FlowCardAction("deleteVariable");
 actiondeleteVariable.register().registerRunListener((args, state) => {
-  extractVariable = [];
-  addVariable(null);
-  console.log("Variables deleted");
+  deleteVariable(args.log)
+  //extractedVariables = {};
+  //extractedVariables;
+  console.log("Variables deleted " + args.log);
   return true;
 });

@@ -8,9 +8,10 @@ module.exports = [
     path: "/variable",
     requires_authorization: true,
     public: true,
-    fn: function (data, callback) {
-      let log = Homey.app.getLog();
-      return callback(null, log);
+    fn: function (Variables, callback) {
+     let extractedVariables = Homey.ManagerSettings.get("extractedVariables");
+      //let extractedVariables = Homey.app.getExtractedVariables();
+      return callback(null, extractedVariables);
     },
   },
 ];
